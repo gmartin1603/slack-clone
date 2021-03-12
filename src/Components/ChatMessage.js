@@ -5,15 +5,15 @@ function ChatMessage(props) {
     return (
         <Container>
             <UserAvatar>
-                <img src="https://lh3.googleusercontent.com/ogw/ADGmqu_U1KxuRMtDpFOtaLCgv7P7QmNvWeHMEekdG9qQjQ=s83-c-mo" alt="User"/>
+                <img src={props.image} alt="User"/>
             </UserAvatar>
             <MessageContent>
                 <Name>
-                   George Martin
-                   <span>3/5/2021 12:21AM</span> 
+                   {props.name}
+                   <span>{new Date(props.timeStamp.toDate()).toUTCString()}</span> 
                 </Name>
                 <Text>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, aut explicabo, esse ipsum modi eveniet id perferendis saepe rerum dolore exercitationem reprehenderit atque voluptates et veritatis obcaecati aspernatur alias laboriosam.
+                    {props.text}
                 </Text>
             </MessageContent>
         </Container>

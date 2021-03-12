@@ -4,12 +4,14 @@ import InfoIcon from '@material-ui/icons/Info';
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import db from '../firebase';
+import firebase from 'firebase'
 import { useParams } from 'react-router';
 
 function Chat(props) {
 
     let { channelId } = useParams()
     const [channel, setChannel] = useState({})
+    const [messages, setMessages] = useState([])
 
     const getChannel = () => {
         db.collection('rooms').doc(channelId)
@@ -18,15 +20,43 @@ function Chat(props) {
         })
     }
 
+    const sendMessage = (text) => {
+        if (channelId) {
+            let payload = {
+                text: text,
+                user: props.user.name,
+                image: props.user.photo,
+                dateStamp: firebase.firestore.Timestamp.now()
+            }
+            db.collection('rooms')
+            .doc(channelId.toString())
+            .collection('messages')
+            .add(payload)
+        }
+    }
+
+    const getMessages = () => {
+        db.collection('rooms')
+        .doc(channelId)
+        .collection('messages')
+        .orderBy('dateStamp', 'asc')
+        .get()
+        .then((snapShot) => {
+            let messages = snapShot.docs.map((doc) => doc.data())
+            setMessages(messages)
+        })
+    }
+
    useEffect(() => {
         getChannel()
-   }, [channelId])
+        getMessages()
+   }, [channelId, messages])
     return (
         <Container>
             <Header>
                 <Channel>
                     <ChannelName>
-                        # {channel.name}
+                        # {channel && channel.name}
                     </ChannelName>
                     <ChannelInfo>
                         Company channel wide announcments
@@ -40,9 +70,21 @@ function Chat(props) {
                 </ChannelDetails>
             </Header>
             <MessageContainer>
-                <ChatMessage/>
+
+                {
+                    messages.length > 0 &&
+                    messages.map((data, index) => (
+                        <ChatMessage
+                        text={data.text}
+                        name={data.user}
+                        image={data.image}
+                        timeStamp={data.dateStamp}
+                        />
+                    ))
+                }
+                
             </MessageContainer>
-            <ChatInput/>
+            <ChatInput sendMessage={sendMessage}/>
         </Container>
     );
 }
@@ -52,6 +94,7 @@ export default Chat;
 const Container = styled.div`
     display: grid;
     grid-template-rows: 64px auto min-content;
+    
 `
 
 const Header = styled.div`
@@ -63,7 +106,12 @@ const Header = styled.div`
 `
 
 const MessageContainer = styled.div`
+    overflow: scroll;
+    max-height: 72vh;
 
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `
 
 
