@@ -13,7 +13,7 @@ function ChatMessage(props) {
                    <span>3/5/2021 12:21AM</span> 
                 </Name>
                 <Text>
-                    Test test test
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis, aut explicabo, esse ipsum modi eveniet id perferendis saepe rerum dolore exercitationem reprehenderit atque voluptates et veritatis obcaecati aspernatur alias laboriosam.
                 </Text>
             </MessageContent>
         </Container>
