@@ -32,7 +32,7 @@ function App() {
 
   useEffect(() => {
     getChannels()
-  }, [])
+  }, [user])
 console.log(rooms)
   return (
     <div className="App">
@@ -44,7 +44,7 @@ console.log(rooms)
         <Container>
           <Header user={user} signOut={signOut} />
           <Main>
-            <SideBar rooms={rooms} />
+            <SideBar rooms={rooms} name={user.name} />
             <Switch>
               <Route path="/room/:channelId">
                 <Chat user={user} />

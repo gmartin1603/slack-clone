@@ -19,9 +19,13 @@ function SideBar(props) {
     const addChannel = () => {
         const promptName = prompt("Enter Channel Name")
         if (promptName) {
-            db.collection('rooms').add({
-                name: promptName
-            })
+            const bio = prompt("Enter Channel Bio")
+            if (bio) {
+                db.collection('rooms').add({
+                    name: promptName,
+                    bio: bio
+                })
+            }
         }
     }
 
@@ -29,11 +33,8 @@ function SideBar(props) {
         <Container>
             <WorkspaceContainer>
                 <Name>
-                    Clever Programmer
+                    {props.name}
                 </Name>
-                <NewMessage>
-                    <AddCircleOutlineIcon/>
-                </NewMessage>
             </WorkspaceContainer>
             <MainChannels>
                 {
@@ -50,12 +51,17 @@ function SideBar(props) {
                     <div>
                         Channels
                     </div>
-                    <AddIcon onClick={addChannel} />
+                    <NewMessage>
+                        <AddIcon onClick={addChannel} />
+                    </NewMessage>
                 </NewChannel>
                 <ChannelsList>
                     {
                         props.rooms.map(item => (
-                            <Channel onClick={() => goToChannel(item.id)}>
+                            <Channel
+                            onClick={() => goToChannel(item.id)}
+                            id={item.id}
+                            >
                                 # {item.name}
                             </Channel>
 
@@ -85,12 +91,11 @@ const WorkspaceContainer = styled.div`
 `
 
 const Name = styled.div`
-
+    cursor: default;
 `
 
 const NewMessage = styled.div`
-    width: 36px;
-    height: 36px;
+    height: 100%;
     color: white;
     display: flex;
     align-items: center;
@@ -131,7 +136,7 @@ const NewChannel = styled.div`
     align-items: center;
     height: 28px;
     padding: 0 19px;
-    cursor: pointer;
+    cursor: default;
     :hover {
         background: #350d36;
     }

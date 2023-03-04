@@ -59,7 +59,7 @@ function Chat(props) {
                         # {channel && channel.name}
                     </ChannelName>
                     <ChannelInfo>
-                        Company channel wide announcments
+                    {channel && channel.bio}
                     </ChannelInfo>
                 </Channel>
                 <ChannelDetails>
@@ -75,6 +75,7 @@ function Chat(props) {
                     messages.length > 0 &&
                     messages.map((data, index) => (
                         <ChatMessage
+                        id={index}
                         text={data.text}
                         name={data.user}
                         image={data.image}
@@ -82,7 +83,7 @@ function Chat(props) {
                         />
                     ))
                 }
-                
+
             </MessageContainer>
             <ChatInput sendMessage={sendMessage}/>
         </Container>
@@ -94,7 +95,7 @@ export default Chat;
 const Container = styled.div`
     display: grid;
     grid-template-rows: 64px auto min-content;
-    
+
 `
 
 const Header = styled.div`
@@ -116,7 +117,7 @@ const MessageContainer = styled.div`
 
 
 const Channel = styled.div`
-    
+
 `
 
 const ChannelName = styled.div`

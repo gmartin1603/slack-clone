@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import logo from '../assets/logo192.png'
 import {auth, provider} from '../firebase'
 
 function Login(props) {
@@ -22,7 +23,7 @@ function Login(props) {
     return (
         <Container>
             <Content>
-                <SlackImg src="https://cdn.freebiesupply.com/logos/large/2x/slack-logo-icon.png"/>
+                <SlackImg src={logo}/>
                 <h1>Sign into Slack</h1>
                 <SignInButton onClick={() => signIn()}>
                     Sign in with Google
@@ -37,7 +38,7 @@ export default Login;
 const Container = styled.div`
     width: 100%;
     height: 100vh;
-    background-color: #f8f8f8;
+    background-color: rgb(63, 14, 64);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,6 +47,7 @@ const Content = styled.div`
     background: white;
     padding: 100px;
     border-radius: 5px;
+    border: 1px solid black;
     box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
     display: flex;
     flex-direction: column;
@@ -59,10 +61,12 @@ const SlackImg = styled.img`
 const SignInButton = styled.button`
     margin-top: 50px;
     background-color: #0a8d48;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
     color: white;
     border: none;
     height: 40px;
-    border-radius: 4px; 
+    border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
+    font-weight: 550;
 `
